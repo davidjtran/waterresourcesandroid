@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "252156228901",
+    "firebase_url": "https://tcm2340-bd4ef.firebaseio.com",
+    "project_id": "tcm2340-bd4ef",
+    "storage_bucket": "tcm2340-bd4ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252156228901:android:3f57df0eb76f2196",
+        "android_client_info": {
+          "package_name": "davditran.waterresources"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252156228901-it1jnqt5bri6pvnaacnfgp9cb5lv9c0e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLPLn-bQQk6K_VHV763vX_8k1do9AC_qQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
