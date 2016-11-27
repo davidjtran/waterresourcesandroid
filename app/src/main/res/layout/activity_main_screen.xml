@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/viewReportsButton"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.97"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
@@ -54,7 +54,7 @@
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/viewReportsButton"
@@ -68,5 +68,49 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="296dp" />
+        android:layout_marginBottom="328dp" />
+
+    <Button
+        android:id="@+id/qualityReportButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit Quality Report"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="272dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp" />
+
+    <Button
+        android:id="@+id/viewQualityReportButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="216dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:text="View Quality Report"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/mapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Map"
+        tools:layout_editor_absoluteY="303dp"
+        tools:layout_editor_absoluteX="148dp" />
+
+    <Button
+        android:id="@+id/graphButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Historical Report"
+        tools:layout_editor_absoluteX="112dp"
+        tools:layout_editor_absoluteY="358dp" />
 </android.support.constraint.ConstraintLayout>

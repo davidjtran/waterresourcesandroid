@@ -25,7 +25,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainScreenActivity"></activity>
+        <activity android:name=".MainScreenActivity" />
+        <activity android:name=".SubmitReportActivity" />
+        <activity android:name=".ViewReportActivity" />
+        <activity android:name=".UserProfileActivity"></activity>
     </application>
 
 </manifest>

@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (attemptLogin()) {
                     Intent mainScreenIntent = new Intent(LoginActivity.this, MainScreenActivity.class);
+                    mainScreenIntent.putExtra("User", (Serializable) LoginActivity.this.user);
                     LoginActivity.this.startActivity(mainScreenIntent);
                 }
             }
@@ -136,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
         String username = mEmailView.getText().toString().trim();
         String password = mPasswordView.getText().toString().trim();
         if (registeredUsers.containsKey(username) && registeredUsers.get(username).getPassword().equals(password)) {
-            user = registeredUsers.get(username);
+            this.user = registeredUsers.get(username);
             return true;
         } else {
             Toast.makeText(this, "Invalid login", Toast.LENGTH_SHORT).show();
