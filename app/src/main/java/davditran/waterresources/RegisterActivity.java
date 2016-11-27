@@ -24,6 +24,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import davditran.waterresources.model.SerializationController;
 import davditran.waterresources.model.User;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -37,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button cancelButton;
     private ProgressDialog progressDialog;
     private DatabaseReference mDatabase;
+    private SerializationController serializationController;
 
     private FirebaseAuth firebaseAuth;
 
@@ -47,6 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        serializationController = SerializationController.getInstance();
+
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mEmailView = (EditText) findViewById(R.id.email);
@@ -57,7 +64,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("Nice");
-                registerUser();
+                registerUserNoDB();
+                finish();
             }
         });
 
@@ -71,70 +79,108 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         //creates spinner for account type
-        Spinner mAccountType = (Spinner) findViewById(R.id.accountType);
+        mAccountType = (Spinner) findViewById(R.id.accountType);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.account_type, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mAccountType.setAdapter(adapter);
     }
 
-    private void registerUser() {
-        final String email = mEmailView.getText().toString().trim();
-        final String password = mPasswordView.getText().toString().trim();
-        final String username = mUsernameView.getText().toString().trim();
-
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(this, "Please Enter an Email", Toast.LENGTH_SHORT).show();
-            return;
+    private void registerUserNoDB() {
+        User user = new User(mUsernameView.getText().toString(), mPasswordView.getText().toString(),
+                mAccountType.getItemAtPosition(mAccountType.getSelectedItemPosition()).toString(), mEmailView.getText().toString());
+        if (isInputValid()) {
+            serializationController.retrieveChanges(this, "users");
+            ArrayList<User> userList = SerializationController.users;
+            userList.add(user);
+            serializationController.saveChanges(this, "users", SerializationController.users);
+            Log.d("Register", "Register success");
         }
-
-        if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Please Enter a Password", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(username)) {
-            Toast.makeText(this, "Please Enter a Username", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        progressDialog.setMessage("Registering User...");
-        progressDialog.show();
-
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.hide();
-                        if (task.isSuccessful()) {
-                            System.out.println("Success!");
-                            onAuthSuccess(task.getResult().getUser());
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "Could not register, please try again", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
-    private void onAuthSuccess(FirebaseUser user) {
-        final String password = mPasswordView.getText().toString().trim();
-        final String username = mUsernameView.getText().toString().trim();
-        String accountType;
-        if (mAccountType.getSelectedItem() == null) {
-            accountType = "User";
+    private boolean isInputValid() {
+        String errorMessage = "";
+        ArrayList<User> userList = serializationController.users;
+        HashMap<String, User> registeredUserMap = new HashMap<>();
+        for (User user : userList) {
+            if (user != null) {
+                registeredUserMap.put(user.getUsername(), user);
+            }
+        }
+        if (registeredUserMap.containsKey(mUsernameView.getText())) {
+            errorMessage += "Username already exists!\n";
+        }
+        if (mPasswordView.getText() == null || mPasswordView.getText().length() < 4) {
+            errorMessage += "No valid password entered! Please make password longer than four characters! \n";
+        }
+        if (mEmailView.getText() == null || mEmailView.getText().length() == 0 || !mEmailView.getText().toString().contains("@")) {
+            errorMessage += "No valid email entered!\n";
+        }
+        if (errorMessage.length() == 0) {
+            return true;
         } else {
-            accountType = mAccountType.getItemAtPosition(mAccountType.getSelectedItemPosition()).toString();
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+            return false;
         }
-        // Write new user
-        writeNewUser(user.getEmail(), user.getUid(), username, password, accountType);
-
-        // Go to MainActivity
-        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-        finish();
     }
 
-    private void writeNewUser(String email, String userID, String username, String password, String accountType) {
-        User user =  new User(username, password, accountType, email);
-        mDatabase.child("users").child(userID).setValue(user);
-    }
+//    private void registerUser() {
+//        final String email = mEmailView.getText().toString().trim();
+//        final String password = mPasswordView.getText().toString().trim();
+//        final String username = mUsernameView.getText().toString().trim();
+//
+//        if (TextUtils.isEmpty(email)) {
+//            Toast.makeText(this, "Please Enter an Email", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        if (TextUtils.isEmpty(password)) {
+//            Toast.makeText(this, "Please Enter a Password", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        if (TextUtils.isEmpty(username)) {
+//            Toast.makeText(this, "Please Enter a Username", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        progressDialog.setMessage("Registering User...");
+//        progressDialog.show();
+//
+//        firebaseAuth.createUserWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        progressDialog.hide();
+//                        if (task.isSuccessful()) {
+//                            System.out.println("Success!");
+//                            onAuthSuccess(task.getResult().getUser());
+//                        } else {
+//                            Toast.makeText(RegisterActivity.this, "Could not register, please try again", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+//    }
+//
+//    private void onAuthSuccess(FirebaseUser user) {
+//        final String password = mPasswordView.getText().toString().trim();
+//        final String username = mUsernameView.getText().toString().trim();
+//        String accountType;
+//        if (mAccountType.getSelectedItem() == null) {
+//            accountType = "User";
+//        } else {
+//            accountType = mAccountType.getItemAtPosition(mAccountType.getSelectedItemPosition()).toString();
+//        }
+//        // Write new user
+//        writeNewUser(user.getEmail(), user.getUid(), username, password, accountType);
+//
+//        // Go to MainActivity
+//        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+//        finish();
+//    }
+//
+//    private void writeNewUser(String email, String userID, String username, String password, String accountType) {
+//        User user =  new User(username, password, accountType, email);
+//        mDatabase.child("users").child(userID).setValue(user);
+//    }
 }

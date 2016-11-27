@@ -1,15 +1,19 @@
 package davditran.waterresources.model;
 
+import java.io.Serializable;
+
 /**
  * Created by David on 11/24/2016.
  */
 
-public class User {
+public class User implements Serializable {
     //Basic Information
     private String username;
     private String password;
     private String accountType;
     private String email;
+
+    private static final long serialVersionUID = 1L;
 
 
     //Advanced Information
