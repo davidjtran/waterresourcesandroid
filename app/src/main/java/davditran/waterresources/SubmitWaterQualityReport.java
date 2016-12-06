@@ -86,7 +86,7 @@ public class SubmitWaterQualityReport extends AppCompatActivity {
             String type = typeSpinner.getItemAtPosition(typeSpinner.getSelectedItemPosition()).toString();
             String condition = conditionSpinner.getItemAtPosition(conditionSpinner.getSelectedItemPosition()).toString();
             Location loc = new Location(latitude, longitude, type
-                    , "<h2>Type: " + type + "<br> Condition: " + condition);
+                    , "Type: " + type + "\nCondition: " + condition + "\nVirus PPM: " + virusPPM + "\nContainment PPM: " + containmentPPM);
             WaterQualityReport report = new WaterQualityReport(user.getUsername(), loc, type, condition, virusPPM, containmentPPM);
             reportList.add(report);
             serializationController.saveChanges(this, "waterQualityReports", SerializationController.waterQualityReports);

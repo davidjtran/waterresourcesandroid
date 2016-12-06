@@ -88,5 +88,14 @@ public class MainScreenActivity extends AppCompatActivity {
                 MainScreenActivity.this.startActivity(viewQualityReportIntent);
             }
         });
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mapIntent = new Intent(MainScreenActivity.this, MapsActivity.class);
+                //submitReportIntent.putExtra("User", (Serializable) MainScreenActivity.this.user);
+                MainScreenActivity.this.startActivity(mapIntent);
+            }
+        });
     }
 }

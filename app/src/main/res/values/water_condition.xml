@@ -2,7 +2,6 @@
 <resources>
     <string-array name="water_condition">
         <item>Clean</item>
-        <item>Clean - Boil first</item>
         <item>Dirty - Treatable</item>>
         <item>Dirty - Untreatable</item>
         <item>Toxic</item>

@@ -79,7 +79,7 @@ public class SubmitReportActivity extends AppCompatActivity {
             String type = typeSpinner.getItemAtPosition(typeSpinner.getSelectedItemPosition()).toString();
             String condition = conditionSpinner.getItemAtPosition(conditionSpinner.getSelectedItemPosition()).toString();
             Location loc = new Location(latitude, longitude, type
-                    , "<h2>Type: " + type + "<br> Condition: " + condition);
+                    , "Type: " + type + "\nCondition: " + condition);
             Report report = new Report(user.getUsername(), loc, type, condition);
             reportList.add(report);
             serializationController.saveChanges(this, "reports", SerializationController.reports);
