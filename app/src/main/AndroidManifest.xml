@@ -28,7 +28,12 @@
         <activity android:name=".MainScreenActivity" />
         <activity android:name=".SubmitReportActivity" />
         <activity android:name=".ViewReportActivity" />
-        <activity android:name=".UserProfileActivity"></activity>
+        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".EditProfileActivity" />
+        <activity
+            android:name=".SubmitQualityReport"
+            android:label="@string/title_activity_submit_quality_report"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

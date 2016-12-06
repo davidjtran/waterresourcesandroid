@@ -52,5 +52,23 @@ public class MainScreenActivity extends AppCompatActivity {
                 MainScreenActivity.this.startActivity(userProfileIntent);
             }
         });
+
+        submitReportsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent submitReportIntent = new Intent(MainScreenActivity.this, SubmitReportActivity.class);
+                submitReportIntent.putExtra("User", (Serializable) MainScreenActivity.this.user);
+                MainScreenActivity.this.startActivity(submitReportIntent);
+            }
+        });
+
+        viewReportsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent viewReportIntent = new Intent(MainScreenActivity.this, ViewReportActivity.class);
+                //submitReportIntent.putExtra("User", (Serializable) MainScreenActivity.this.user);
+                MainScreenActivity.this.startActivity(viewReportIntent);
+            }
+        });
     }
 }

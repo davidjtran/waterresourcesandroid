@@ -50,8 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+//        firebaseAuth = FirebaseAuth.getInstance();
+//        mDatabase = FirebaseDatabase.getInstance().getReference();
         serializationController = SerializationController.getInstance();
 
 
