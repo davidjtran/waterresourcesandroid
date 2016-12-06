@@ -67,4 +67,5 @@ public class UserProfileActivity extends AppCompatActivity {
         titleText.setText(user.getTitle());
         accountTypeText.setText(user.getAccountType());
     }
+
 }

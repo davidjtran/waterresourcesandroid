@@ -97,5 +97,14 @@ public class MainScreenActivity extends AppCompatActivity {
                 MainScreenActivity.this.startActivity(mapIntent);
             }
         });
+
+        graphButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent graphIntent = new Intent(MainScreenActivity.this, GraphPromptActivity.class);
+                //submitReportIntent.putExtra("User", (Serializable) MainScreenActivity.this.user);
+                MainScreenActivity.this.startActivity(graphIntent);
+            }
+        });
     }
 }

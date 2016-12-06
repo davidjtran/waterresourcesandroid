@@ -39,7 +39,6 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 editProfile();
-                Log.d("TITLE CHECK", user.getTitle());
                 finish();
             }
         });

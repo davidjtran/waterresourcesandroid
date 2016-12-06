@@ -18,7 +18,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp"
-        android:id="@+id/email"
+        android:id="@+id/emailText"
         android:hint="Enter Email" />
 
     <EditText
@@ -28,22 +28,10 @@
         android:ems="10"
         android:layout_marginTop="68dp"
         android:id="@+id/password"
-        android:layout_below="@+id/email"
-        android:layout_alignLeft="@+id/email"
-        android:layout_alignStart="@+id/email"
+        android:layout_below="@+id/emailText"
+        android:layout_alignLeft="@+id/emailText"
+        android:layout_alignStart="@+id/emailText"
         android:hint="Enter Password" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/username"
-        android:layout_below="@+id/email"
-        android:layout_alignLeft="@+id/password"
-        android:layout_alignStart="@+id/password"
-        android:layout_marginTop="15dp"
-        android:hint="Enter Username" />
 
     <Button
         android:text="Register"
@@ -72,5 +60,17 @@
         android:layout_alignStart="@+id/registerButton"
         android:layout_marginBottom="28dp"
         android:text="Cancel" />
+
+    <EditText
+        android:id="@+id/usernameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emailText"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Enter username"
+        android:inputType="textPersonName"
+        android:layout_alignLeft="@+id/emailText"
+        android:layout_alignStart="@+id/emailText" />
 
 </RelativeLayout>

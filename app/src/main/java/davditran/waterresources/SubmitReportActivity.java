@@ -76,10 +76,12 @@ public class SubmitReportActivity extends AppCompatActivity {
         if (isInputValid()) {
             double longitude = Double.parseDouble(longitudeText.getText().toString());
             double latitude = Double.parseDouble(latitudeText.getText().toString());
+            String longString = longitudeText.getText().toString().trim();
+            String latString = latitudeText.getText().toString().trim();
             String type = typeSpinner.getItemAtPosition(typeSpinner.getSelectedItemPosition()).toString();
             String condition = conditionSpinner.getItemAtPosition(conditionSpinner.getSelectedItemPosition()).toString();
             Location loc = new Location(latitude, longitude, type
-                    , "Type: " + type + "\nCondition: " + condition);
+                    , "Type: " + type + "\nCondition: " + condition + "\nLocation: " + latString + ", " + longString);
             Report report = new Report(user.getUsername(), loc, type, condition);
             reportList.add(report);
             serializationController.saveChanges(this, "reports", SerializationController.reports);
