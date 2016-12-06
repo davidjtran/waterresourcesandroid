@@ -84,9 +84,22 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (attemptLogin()) {
-                    Intent mainScreenIntent = new Intent(LoginActivity.this, MainScreenActivity.class);
-                    mainScreenIntent.putExtra("User", (Serializable) LoginActivity.this.user);
-                    LoginActivity.this.startActivity(mainScreenIntent);
+                    Log.d("Account Type", LoginActivity.this.user.getAccountType());
+                    if (returnAccountType().equals("User")) {
+                        Log.d("User", "It was a user");
+                        Intent userScreenIntent = new Intent(LoginActivity.this, UserScreenActivity.class);
+                        userScreenIntent.putExtra("User", (Serializable) LoginActivity.this.user);
+                        LoginActivity.this.startActivity(userScreenIntent);
+                    } else if (returnAccountType().equals("Worker")) {
+                        Intent workerScreenIntent = new Intent(LoginActivity.this, WorkerScreenActivity.class);
+                        workerScreenIntent.putExtra("User", (Serializable) LoginActivity.this.user);
+                        LoginActivity.this.startActivity(workerScreenIntent);
+                    } else if (returnAccountType().equals("Manager")) {
+                        Log.d("Manager", "It was a manager");
+                        Intent mainScreenIntent = new Intent(LoginActivity.this, MainScreenActivity.class);
+                        mainScreenIntent.putExtra("User", (Serializable) LoginActivity.this.user);
+                        LoginActivity.this.startActivity(mainScreenIntent);
+                    }
                 }
             }
         });
@@ -124,6 +137,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid login", Toast.LENGTH_SHORT).show();
             return false;
         }
+    }
+
+    public String returnAccountType() {
+        return this.user.getAccountType();
     }
 
 //    private void populateAutoComplete() {
