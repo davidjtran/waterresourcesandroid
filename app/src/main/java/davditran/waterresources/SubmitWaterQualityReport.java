@@ -15,12 +15,15 @@ import davditran.waterresources.model.Location;
 import davditran.waterresources.model.Report;
 import davditran.waterresources.model.SerializationController;
 import davditran.waterresources.model.User;
+import davditran.waterresources.model.WaterQualityReport;
 
-public class SubmitReportActivity extends AppCompatActivity {
+public class SubmitWaterQualityReport extends AppCompatActivity {
 
     //UI References
     private EditText latitudeText;
     private EditText longitudeText;
+    private EditText virusText;
+    private EditText containmentText;
     private Button submitButton;
     private Button cancelButton;
     private Spinner typeSpinner;
@@ -31,12 +34,14 @@ public class SubmitReportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_submit_report);
+        setContentView(R.layout.activity_submit_water_quality_report);
         serializationController = SerializationController.getInstance();
         this.user = (User) getIntent().getSerializableExtra("User");
 
         latitudeText = (EditText) findViewById(R.id.latitudeText);
         longitudeText = (EditText) findViewById(R.id.longitudeText);
+        virusText = (EditText) findViewById(R.id.virusText);
+        containmentText = (EditText) findViewById(R.id.containmentText);
         submitButton = (Button) findViewById(R.id.submitButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
 
@@ -71,18 +76,20 @@ public class SubmitReportActivity extends AppCompatActivity {
     }
 
     public void onClickSubmitReport() {
-        serializationController.retrieveChanges(this, "reports");
-        ArrayList<Report> reportList = SerializationController.reports;
+        serializationController.retrieveChanges(this, "waterQualityReports");
+        ArrayList<WaterQualityReport> reportList = SerializationController.waterQualityReports;
         if (isInputValid()) {
             double longitude = Double.parseDouble(longitudeText.getText().toString());
             double latitude = Double.parseDouble(latitudeText.getText().toString());
+            String virusPPM = virusText.getText().toString();
+            String containmentPPM = containmentText.getText().toString();
             String type = typeSpinner.getItemAtPosition(typeSpinner.getSelectedItemPosition()).toString();
             String condition = conditionSpinner.getItemAtPosition(conditionSpinner.getSelectedItemPosition()).toString();
             Location loc = new Location(latitude, longitude, type
                     , "<h2>Type: " + type + "<br> Condition: " + condition);
-            Report report = new Report(user.getUsername(), loc, type, condition);
+            WaterQualityReport report = new WaterQualityReport(user.getUsername(), loc, type, condition, virusPPM, containmentPPM);
             reportList.add(report);
-            serializationController.saveChanges(this, "reports", SerializationController.reports);
+            serializationController.saveChanges(this, "waterQualityReports", SerializationController.waterQualityReports);
         }
     }
 
@@ -95,8 +102,17 @@ public class SubmitReportActivity extends AppCompatActivity {
             Toast.makeText(this, "Latitude and longitude must be a number", Toast.LENGTH_SHORT).show();
             return false;
         }
+        try {
+            double virusPPM = Double.parseDouble(virusText.getText().toString());
+            double containmentPPM = Double.parseDouble(containmentText.getText().toString());
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Virus and containment must be a number", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         double longitude = Double.parseDouble(longitudeText.getText().toString());
         double latitude = Double.parseDouble(latitudeText.getText().toString());
+        double virusPPM = Double.parseDouble(virusText.getText().toString());
+        double containmentPPM = Double.parseDouble(containmentText.getText().toString());
         //for now just check they actually typed something
         if (longitudeText.getText().toString() == null || longitudeText.getText().toString().length() == 0) {
             errorMessage += "No valid location entered!\n";
@@ -104,11 +120,23 @@ public class SubmitReportActivity extends AppCompatActivity {
         if (latitudeText.getText() == null || latitudeText.getText().length() == 0) {
             errorMessage += "No valid location entered!\n";
         }
+        if (virusText.getText() == null || virusText.getText().length() == 0) {
+            errorMessage += "No valid Virus PPM entered!\n";
+        }
+        if (containmentText.getText() == null || containmentText.getText().length() == 0) {
+            errorMessage += "No valid Containment PPM entered!\n";
+        }
         if (longitude > 180 || longitude < -180) {
             errorMessage += "Longitude field is invalid!\n";
         }
         if (latitude > 90 || latitude < -90) {
             errorMessage += "Latitude field is invalid!\n";
+        }
+        if (virusPPM < 0) {
+            errorMessage += "VirusPPM cannot be negative";
+        }
+        if (containmentPPM < 0) {
+            errorMessage += "VirusPPM cannot be negative";
         }
         if (conditionSpinner.getItemAtPosition(conditionSpinner.getSelectedItemPosition()).toString() == null) {
             errorMessage += "No valid water condition entered!\n";

@@ -14,6 +14,7 @@ public class WaterQualityReport implements Serializable {
     private String waterCondition = "";
     private String virusPPM = "";
     private String contamPPM = "";
+    private String waterType = "";
     private SerializationController serializationController;
 
 
@@ -22,12 +23,13 @@ public class WaterQualityReport implements Serializable {
         this.dateTime = dateFormat.format(new Date());
     }
 
-    public WaterQualityReport(String reporterName, Location location, String waterCondition, String virusPPM, String contamPPM) {
+    public WaterQualityReport(String reporterName, Location location, String waterType, String waterCondition, String virusPPM, String contamPPM) {
         serializationController = SerializationController.getInstance();
         ArrayList<WaterQualityReport> reports = SerializationController.waterQualityReports;
         setReportNumber(String.format("%05d", reports.size() + 1));
         setReporterName(reporterName);
         setLocation(location);
+        setWaterType(waterType);
         setWaterCondition(waterCondition);
         setVirusPPM(virusPPM);
         setContamPPM(contamPPM);
@@ -49,6 +51,14 @@ public class WaterQualityReport implements Serializable {
      */
     public String getMonth() {
         return getDateTime().substring(0, 3);
+    }
+
+    public void setWaterType(String type) {
+        this.waterType = type;
+    }
+
+    public String getWaterType() {
+        return this.waterType;
     }
 
     private String getDateTime() {

@@ -29,31 +29,15 @@ public class SerializationController implements Serializable {
     }
 
     public void saveAll(Context context) {
-        //saveChanges("admins", admins);
-        //saveChanges("managers", managers);
-        //saveChanges("registeredUsers", registeredUsers);
         saveChanges(context, "reports", reports);
-        //saveChanges("submittedQualityReports", submittedQualityReports);
-        //saveChanges("submittedReports", submittedReports);
         saveChanges(context, "users", users);
         saveChanges(context, "waterQualityReports", waterQualityReports);
-        //saveChanges("workers", workers);
     }
 
     public void retrieveAll(Context context) {
-        //admins = (ArrayList<Admin>)retrieveChanges("admins");
-        //noinspection unchecked
-        //managers = (ArrayList<Manager>)retrieveChanges("managers");
-        //registeredUsers = (ArrayList<RegisteredUser>)retrieveChanges("registeredUsers");
-        //noinspection unchecked
         reports = (ArrayList<Report>) retrieveChanges(context, "reports");
-        //submittedQualityReports = (ArrayList<SubmittedQualityReports>)retrieveChanges("submittedQualityReports");
-        //submittedReports = (ArrayList<SubmittedReports>)retrieveChanges("submittedReports");
-        //noinspection unchecked
         users = (ArrayList<User>) retrieveChanges(context, "users");
-        //noinspection unchecked
         waterQualityReports = (ArrayList<WaterQualityReport>) retrieveChanges(context, "waterQualityReports");
-        //workers = (ArrayList<Worker>)retrieveChanges("workers");
     }
 
     //SAVE-------------------------------------------------------------------------------------------

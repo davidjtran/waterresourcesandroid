@@ -34,7 +34,7 @@ public class MainScreenActivity extends AppCompatActivity {
         viewReportsButton = (Button) findViewById(R.id.viewReportsButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
         qualityReportButton = (Button) findViewById(R.id.qualityReportButton);
-        viewQualityReportButton = (Button) findViewById(R.id.viewReportsButton);
+        viewQualityReportButton = (Button) findViewById(R.id.viewQualityReportButton);
         mapButton = (Button) findViewById(R.id.mapButton);
         graphButton = (Button) findViewById(R.id.graphButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +68,24 @@ public class MainScreenActivity extends AppCompatActivity {
                 Intent viewReportIntent = new Intent(MainScreenActivity.this, ViewReportActivity.class);
                 //submitReportIntent.putExtra("User", (Serializable) MainScreenActivity.this.user);
                 MainScreenActivity.this.startActivity(viewReportIntent);
+            }
+        });
+
+        qualityReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent submitQualityReportIntent = new Intent(MainScreenActivity.this, SubmitWaterQualityReport.class);
+                submitQualityReportIntent.putExtra("User", (Serializable) MainScreenActivity.this.user);
+                MainScreenActivity.this.startActivity(submitQualityReportIntent);
+            }
+        });
+
+        viewQualityReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent viewQualityReportIntent = new Intent(MainScreenActivity.this, ViewQualityReportsActivity.class);
+                //submitReportIntent.putExtra("User", (Serializable) MainScreenActivity.this.user);
+                MainScreenActivity.this.startActivity(viewQualityReportIntent);
             }
         });
     }
